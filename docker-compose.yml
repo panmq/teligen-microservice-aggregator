@@ -1,0 +1,50 @@
+version: "3.1"
+services:
+  discovery:
+    image: teligen-microservice-eureka
+    container_name: teligen-microservice-eureka
+#    hostname: discovery                           # 指定主机名
+    ports:
+      - 8761:8761
+    volumes:
+      - /tmp/logs:/tmp
+  admin:
+    image: teligen-microservice-admin
+    container_name: teligen-microservice-admin
+    ports:
+      - 8085:8085
+    volumes:
+      - /tmp/logs:/tmp
+    links:
+#    depends_on:
+      - discovery
+  teligen-microservice-provider-sample:
+    image: teligen-microservice-provider-sample
+    container_name: teligen-microservice-provider-sample
+    ports:
+      - 8000:8000
+    volumes:
+      - /tmp/logs:/tmp
+    links:
+      - discovery
+      - admin
+  teligen-microservice-consumer-sample:
+    image: teligen-microservice-consumer-sample
+    container_name: teligen-microservice-consumer-sample
+    ports:
+      - 8022:8022
+    volumes:
+      - /tmp/logs:/tmp
+    links:
+      - discovery
+      - admin
+  teligen-microservice-gateway-sample:
+    image: teligen-microservice-gateway-sample
+    container_name: teligen-microservice-gateway-sample
+    ports:
+      - 8050:8050
+    volumes:
+      - /tmp/logs:/tmp
+    links:
+      - discovery
+      - admin
