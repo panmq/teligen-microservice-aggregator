@@ -48,3 +48,13 @@ services:
     links:
       - discovery
       - admin
+  teligen-microservice-frontend-sample:
+    image: teligen-microservice-frontend-sample
+    container_name: teligen-microservice-frontend-sample
+    ports:
+      - 8081:8081
+    volumes:
+      - /tmp/logs:/tmp
+    links:
+      - discovery
+      - admin
